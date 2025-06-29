@@ -1,5 +1,5 @@
 {
-       "id": "monnit-sensors",
+       "id": "companion-module-monnit-sensors",
        "name": "Monnit Sensors",
        "shortname": "monnit",
        "description": "Retrieve sensor data from a Monnit account",
