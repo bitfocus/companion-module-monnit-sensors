@@ -3,7 +3,7 @@
        "name": "Monnit Sensors",
        "shortname": "monnit",
        "description": "Retrieve sensor data from a Monnit account",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"license": "MIT",
        "repository": "git+https://github.com/bitfocus/companion-module-monnit-sensors.git",
        "bugs": "https://github.com/bitfocus/companion-module-monnit-sensors/issues",
