@@ -5,7 +5,7 @@
        "scripts": {
               "format": "prettier -w .",
               "lint": "eslint .",
-              "package": "companion-module-build"
+              "package": "PATH=/bin:$PATH companion-module-build"
        },
        "license": "MIT",
        "repository": {
