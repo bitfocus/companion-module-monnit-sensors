@@ -1,5 +1,5 @@
 {
-       "name": "companion-module-monnit-sensors",
+       "name": "monnit-sensors",
        "version": "1.0.1",
        "main": "main.js",
        "scripts": {
