@@ -1,9 +1,10 @@
 {
        "name": "monnit-sensors",
-       "version": "1.0.1",
+       "version": "1.0.0",
        "main": "main.js",
        "scripts": {
               "format": "prettier -w .",
+              "lint": "eslint .",
               "package": "companion-module-build"
        },
        "license": "MIT",
@@ -16,6 +17,11 @@
        },
        "devDependencies": {
               "@companion-module/tools": "^2.3.0",
+              "@eslint/js": "^9.19.0",
+              "eslint": "^9.0.0",
+              "eslint-config-prettier": "^10.0.1",
+              "eslint-plugin-n": "^17.15.1",
+              "eslint-plugin-prettier": "^5.2.3",
               "prettier": "^3.5.3"
        },
        "prettier": "@companion-module/tools/.prettierrc.json",
