@@ -22,9 +22,9 @@ function parseSensor(sensor) {
 		const parts = sensor.CurrentReading.split('@')
 		humidity = parseFloat(parts[0])
 		temperature = parseFloat(parts[1])
-		const wetBulbMatch = sensor.CurrentReading.match(/Wet Bulb:\s*([\d.]+)/i)
+		const wetBulbMatch = sensor.CurrentReading.match(/Wet Bulb:\s*(-?[\d.]+)/i)
 		if (wetBulbMatch) wetBulb = parseFloat(wetBulbMatch[1])
-		const humidexMatch = sensor.CurrentReading.match(/Humidex:\s*([\d.]+)/i)
+		const humidexMatch = sensor.CurrentReading.match(/Humidex:\s*(-?[\d.]+)/i)
 		if (humidexMatch) humidex = parseFloat(humidexMatch[1])
 	} else {
 		temperature = parseFloat(sensor.CurrentReading)
