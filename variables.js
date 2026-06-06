@@ -19,6 +19,7 @@ module.exports = function (self) {
 		if (sensor.ApplicationID === 43) {
 			defs.push({ variableId: `${id}_humidity`, name: `${name} Humidity` })
 			defs.push({ variableId: `${id}_temperature`, name: `${name} Temperature` })
+			defs.push({ variableId: `${id}_wet_bulb`, name: `${name} Wet Bulb` })
 		} else {
 			defs.push({ variableId: `${id}_temperature`, name: `${name} Temperature` })
 		}
