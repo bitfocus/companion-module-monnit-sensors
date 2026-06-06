@@ -16,6 +16,7 @@ function parseSensor(sensor) {
 	let temperature = NaN
 	let humidity = NaN
 	let wetBulb = NaN
+	let humidex = NaN
 
 	if (sensor.ApplicationID === 43 && typeof sensor.CurrentReading === 'string') {
 		const parts = sensor.CurrentReading.split('@')
@@ -23,6 +24,8 @@ function parseSensor(sensor) {
 		temperature = parseFloat(parts[1])
 		const wetBulbMatch = sensor.CurrentReading.match(/Wet Bulb:\s*([\d.]+)/i)
 		if (wetBulbMatch) wetBulb = parseFloat(wetBulbMatch[1])
+		const humidexMatch = sensor.CurrentReading.match(/Humidex:\s*([\d.]+)/i)
+		if (humidexMatch) humidex = parseFloat(humidexMatch[1])
 	} else {
 		temperature = parseFloat(sensor.CurrentReading)
 	}
@@ -33,6 +36,7 @@ function parseSensor(sensor) {
 		parsedTemperature: temperature,
 		parsedHumidity: humidity,
 		parsedWetBulb: wetBulb,
+		parsedHumidex: humidex,
 		parsedTimestamp: isNaN(timestamp) ? 0 : timestamp,
 	}
 }
@@ -135,6 +139,7 @@ class ModuleInstance extends InstanceBase {
 			values[`${id}_humidity`] = data.parsedHumidity
 			values[`${id}_temperature`] = data.parsedTemperature
 			values[`${id}_wet_bulb`] = isNaN(data.parsedWetBulb) ? '' : data.parsedWetBulb
+			values[`${id}_humidex`] = isNaN(data.parsedHumidex) ? '' : data.parsedHumidex
 		} else {
 			values[`${id}_temperature`] = data.parsedTemperature
 		}
