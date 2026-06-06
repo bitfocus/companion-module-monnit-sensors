@@ -20,6 +20,7 @@ module.exports = function (self) {
 			defs.push({ variableId: `${id}_humidity`, name: `${name} Humidity` })
 			defs.push({ variableId: `${id}_temperature`, name: `${name} Temperature` })
 			defs.push({ variableId: `${id}_wet_bulb`, name: `${name} Wet Bulb` })
+			defs.push({ variableId: `${id}_humidex`, name: `${name} Humidex` })
 		} else {
 			defs.push({ variableId: `${id}_temperature`, name: `${name} Temperature` })
 		}
