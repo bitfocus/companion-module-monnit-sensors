@@ -15,6 +15,8 @@ For each sensor the following variables are created using the sensor name as a p
 - `<sensor>_lastCommunication`
 - `<sensor>_temperature` – temperature value
 - `<sensor>_humidity` – only for sensors that report humidity
+- `<sensor>_wet_bulb` – only for sensors that report humidity
+- `<sensor>_humidex` – only for sensors that report humidity
 - `<sensor>_battery`
 - `<sensor>_signal`
 - `last_poll_date` – date of the last successful automatic refresh
@@ -31,6 +33,10 @@ For each sensor the following variables are created using the sensor name as a p
 - **Specific Temperature** – warns when temperature equals a specific value.
 - **Humidity Threshold** – warns when humidity is above or below a limit.
 - **Specific Humidity** – warns when humidity equals a specific value.
+- **Humidex Threshold** – warns when humidex is above or below a limit.
+- **Specific Humidex** – warns when humidex equals a specific value.
+- **Wet Bulb Threshold** – warns when wet bulb temperature is above or below a limit.
+- **Specific Wet Bulb** – warns when wet bulb temperature equals a specific value.
 - **Battery Level Warning** – warns when battery percentage falls below a limit.
 - **Signal Strength Warning** – warns when signal percentage falls below a limit.
 - **Last Checkin** – warns when a sensor has not reported within a set number of minutes.

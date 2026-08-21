@@ -27,6 +27,12 @@ module.exports = function (self) {
 		return Object.keys(self.sensors || {}).map((name) => ({ id: name, label: name }))
 	}
 
+	const getHumidityTypeSensorChoices = () => {
+		return Object.entries(self.sensors || {})
+			.filter(([, sensor]) => sensor.ApplicationID === 43)
+			.map(([name]) => ({ id: name, label: name }))
+	}
+
 	self.setFeedbackDefinitions({
 		temperature_warning: {
 			name: 'Temperature Threshold',
@@ -137,6 +143,120 @@ module.exports = function (self) {
 				const sensor = self.sensors[fb.options.sensor]
 				if (!sensor) return false
 				const value = parseFloat(sensor.parsedHumidity)
+				const target = parseFloat(fb.options.value)
+				if (isNaN(value) || isNaN(target)) return false
+				return evaluateExpression(value, fb.options.expression ?? '=', target)
+			},
+		},
+		humidex_warning: {
+			name: 'Humidex Threshold',
+			type: 'advanced',
+			options: [
+				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getHumidityTypeSensorChoices() },
+				{ id: 'above', type: 'number', label: 'Above', default: 90 },
+				{ id: 'above_bgcolor', type: 'colorpicker', label: 'Above: Background Color', default: combineRgb(255, 0, 0) },
+				{ id: 'above_color', type: 'colorpicker', label: 'Above: Text Color', default: combineRgb(255, 255, 255) },
+				{ id: 'below', type: 'number', label: 'Below', default: 65 },
+				{ id: 'below_bgcolor', type: 'colorpicker', label: 'Below: Background Color', default: combineRgb(0, 0, 255) },
+				{ id: 'below_color', type: 'colorpicker', label: 'Below: Text Color', default: combineRgb(255, 255, 255) },
+			],
+			defaultStyle: {
+				bgcolor: combineRgb(255, 0, 0),
+				color: combineRgb(255, 255, 255),
+			},
+			callback: (fb) => {
+				const sensor = self.sensors[fb.options.sensor]
+				if (!sensor) return {}
+				const value = parseFloat(sensor.parsedHumidex)
+				if (isNaN(value)) return {}
+				if (fb.options.above !== undefined && value > fb.options.above) {
+					return { bgcolor: fb.options.above_bgcolor, color: fb.options.above_color }
+				}
+				if (fb.options.below !== undefined && value < fb.options.below) {
+					return { bgcolor: fb.options.below_bgcolor, color: fb.options.below_color }
+				}
+				return {}
+			},
+		},
+		humidex_specific: {
+			name: 'Specific Humidex',
+			type: 'boolean',
+			options: [
+				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getHumidityTypeSensorChoices() },
+				{
+					id: 'expression',
+					type: 'dropdown',
+					label: 'Expression',
+					choices: EXPRESSION_CHOICES,
+					default: '=',
+				},
+				{ id: 'value', type: 'number', label: 'Value', default: 90 },
+			],
+			defaultStyle: {
+				bgcolor: combineRgb(255, 165, 0),
+				color: combineRgb(0, 0, 0),
+			},
+			callback: (fb) => {
+				const sensor = self.sensors[fb.options.sensor]
+				if (!sensor) return false
+				const value = parseFloat(sensor.parsedHumidex)
+				const target = parseFloat(fb.options.value)
+				if (isNaN(value) || isNaN(target)) return false
+				return evaluateExpression(value, fb.options.expression ?? '=', target)
+			},
+		},
+		wet_bulb_warning: {
+			name: 'Wet Bulb Threshold',
+			type: 'advanced',
+			options: [
+				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getHumidityTypeSensorChoices() },
+				{ id: 'above', type: 'number', label: 'Above', default: 80 },
+				{ id: 'above_bgcolor', type: 'colorpicker', label: 'Above: Background Color', default: combineRgb(255, 0, 0) },
+				{ id: 'above_color', type: 'colorpicker', label: 'Above: Text Color', default: combineRgb(255, 255, 255) },
+				{ id: 'below', type: 'number', label: 'Below', default: 55 },
+				{ id: 'below_bgcolor', type: 'colorpicker', label: 'Below: Background Color', default: combineRgb(0, 0, 255) },
+				{ id: 'below_color', type: 'colorpicker', label: 'Below: Text Color', default: combineRgb(255, 255, 255) },
+			],
+			defaultStyle: {
+				bgcolor: combineRgb(255, 0, 0),
+				color: combineRgb(255, 255, 255),
+			},
+			callback: (fb) => {
+				const sensor = self.sensors[fb.options.sensor]
+				if (!sensor) return {}
+				const value = parseFloat(sensor.parsedWetBulb)
+				if (isNaN(value)) return {}
+				if (fb.options.above !== undefined && value > fb.options.above) {
+					return { bgcolor: fb.options.above_bgcolor, color: fb.options.above_color }
+				}
+				if (fb.options.below !== undefined && value < fb.options.below) {
+					return { bgcolor: fb.options.below_bgcolor, color: fb.options.below_color }
+				}
+				return {}
+			},
+		},
+		wet_bulb_specific: {
+			name: 'Specific Wet Bulb',
+			type: 'boolean',
+			options: [
+				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getHumidityTypeSensorChoices() },
+				{
+					id: 'expression',
+					type: 'dropdown',
+					label: 'Expression',
+					choices: EXPRESSION_CHOICES,
+					default: '=',
+				},
+				{ id: 'value', type: 'number', label: 'Value', default: 65 },
+			],
+			defaultStyle: {
+				bgcolor: combineRgb(255, 165, 0),
+				color: combineRgb(0, 0, 0),
+			},
+			callback: (fb) => {
+				const sensor = self.sensors[fb.options.sensor]
+				if (!sensor) return false
+				const value = parseFloat(sensor.parsedWetBulb)
 				const target = parseFloat(fb.options.value)
 				if (isNaN(value) || isNaN(target)) return false
 				return evaluateExpression(value, fb.options.expression ?? '=', target)
