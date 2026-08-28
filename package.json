@@ -18,7 +18,7 @@
 		"@companion-module/base": "~1.14.1"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.7.2"
+		"@companion-module/tools": "^2.8.0"
 	},
 	"resolutions": {
 		"fast-uri": "^3.1.5",
