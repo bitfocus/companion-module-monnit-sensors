@@ -3,26 +3,26 @@ function sanitizeId(name) {
 }
 
 module.exports = function (self) {
-	const defs = [
-		{ variableId: 'last_poll_date', name: 'Last Poll Date' },
-		{ variableId: 'last_poll_time', name: 'Last Poll Time' },
-	]
+	const defs = {
+		last_poll_date: { name: 'Last Poll Date' },
+		last_poll_time: { name: 'Last Poll Time' },
+	}
 
 	for (const name of Object.keys(self.sensors || {})) {
 		const id = sanitizeId(name)
 		const sensor = self.sensors[name] || {}
 
-		defs.push({ variableId: `${id}_lastCommunication`, name: `${name} Last Communication` })
-		defs.push({ variableId: `${id}_battery`, name: `${name} Battery Level` })
-		defs.push({ variableId: `${id}_signal`, name: `${name} Signal Strength` })
+		defs[`${id}_lastCommunication`] = { name: `${name} Last Communication` }
+		defs[`${id}_battery`] = { name: `${name} Battery Level` }
+		defs[`${id}_signal`] = { name: `${name} Signal Strength` }
 
 		if (sensor.ApplicationID === 43) {
-			defs.push({ variableId: `${id}_humidity`, name: `${name} Humidity` })
-			defs.push({ variableId: `${id}_temperature`, name: `${name} Temperature` })
-			defs.push({ variableId: `${id}_wet_bulb`, name: `${name} Wet Bulb` })
-			defs.push({ variableId: `${id}_humidex`, name: `${name} Humidex` })
+			defs[`${id}_humidity`] = { name: `${name} Humidity` }
+			defs[`${id}_temperature`] = { name: `${name} Temperature` }
+			defs[`${id}_wet_bulb`] = { name: `${name} Wet Bulb` }
+			defs[`${id}_humidex`] = { name: `${name} Humidex` }
 		} else {
-			defs.push({ variableId: `${id}_temperature`, name: `${name} Temperature` })
+			defs[`${id}_temperature`] = { name: `${name} Temperature` }
 		}
 	}
 
