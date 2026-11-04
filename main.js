@@ -1,11 +1,12 @@
-const { InstanceBase, Regex, runEntrypoint, InstanceStatus } = require('@companion-module/base')
-const UpgradeScripts = require('./upgrades')
-const UpdateActions = require('./actions')
-const UpdateFeedbacks = require('./feedbacks')
-const UpdateVariableDefinitions = require('./variables')
-const UpdatePresets = require('./presets')
+import { InstanceBase, InstanceStatus } from '@companion-module/base'
+import UpdateActions from './actions.js'
+import UpdateFeedbacks from './feedbacks.js'
+import UpdateVariableDefinitions from './variables.js'
+import UpdatePresets from './presets.js'
 
-function sanitizeId(name) {
+export { UpgradeScripts } from './upgrades.js'
+
+export function sanitizeId(name) {
 	return name.toLowerCase().replace(/[^a-z0-9]/g, '_')
 }
 
@@ -41,12 +42,12 @@ function parseSensor(sensor) {
 	}
 }
 
-class ModuleInstance extends InstanceBase {
+export default class ModuleInstance extends InstanceBase {
 	constructor(internal) {
 		super(internal)
 	}
 
-	async init(config) {
+	async init(config, _isFirstInit, _secrets) {
 		this.config = config
 
 		this.sensors = {}
@@ -70,7 +71,7 @@ class ModuleInstance extends InstanceBase {
 		this.stopPolling()
 	}
 
-	async configUpdated(config) {
+	async configUpdated(config, _secrets) {
 		this.config = config
 		this.startPolling()
 	}
@@ -97,6 +98,7 @@ class ModuleInstance extends InstanceBase {
 				width: 4,
 				default: 5,
 				min: 0,
+				max: 1440,
 			},
 			{
 				type: 'checkbox',
@@ -292,7 +294,3 @@ class ModuleInstance extends InstanceBase {
 		this.updatePresets()
 	}
 }
-
-runEntrypoint(ModuleInstance, UpgradeScripts)
-
-module.exports.sanitizeId = sanitizeId

@@ -1,4 +1,4 @@
-const { combineRgb } = require('@companion-module/base')
+import { combineRgb } from '@companion-module/base'
 
 const EXPRESSION_CHOICES = [
 	{ id: '=', label: 'Equal to (=)' },
@@ -6,6 +6,10 @@ const EXPRESSION_CHOICES = [
 	{ id: '<', label: 'Less than (<)' },
 	{ id: '>', label: 'Greater than (>)' },
 ]
+
+function sensorOption(choices) {
+	return { id: 'sensor', type: 'dropdown', label: 'Sensor', choices, default: choices[0]?.id ?? '' }
+}
 
 function evaluateExpression(value, expression, target) {
 	switch (expression) {
@@ -22,7 +26,7 @@ function evaluateExpression(value, expression, target) {
 	}
 }
 
-module.exports = function (self) {
+export default function UpdateFeedbacks(self) {
 	const getSensorChoices = () => {
 		return Object.keys(self.sensors || {}).map((name) => ({ id: name, label: name }))
 	}
@@ -37,12 +41,13 @@ module.exports = function (self) {
 		temperature_warning: {
 			name: 'Temperature Threshold',
 			type: 'advanced',
+			affectedProperties: ['bgcolor', 'color'],
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getSensorChoices() },
-				{ id: 'above', type: 'number', label: 'Above', default: 79 },
+				sensorOption(getSensorChoices()),
+				{ id: 'above', type: 'number', label: 'Above', default: 79, min: -100000, max: 100000 },
 				{ id: 'above_bgcolor', type: 'colorpicker', label: 'Above: Background Color', default: combineRgb(255, 0, 0) },
 				{ id: 'above_color', type: 'colorpicker', label: 'Above: Text Color', default: combineRgb(255, 255, 255) },
-				{ id: 'below', type: 'number', label: 'Below', default: 65 },
+				{ id: 'below', type: 'number', label: 'Below', default: 65, min: -100000, max: 100000 },
 				{ id: 'below_bgcolor', type: 'colorpicker', label: 'Below: Background Color', default: combineRgb(0, 0, 255) },
 				{ id: 'below_color', type: 'colorpicker', label: 'Below: Text Color', default: combineRgb(255, 255, 255) },
 			],
@@ -68,7 +73,7 @@ module.exports = function (self) {
 			name: 'Specific Temperature',
 			type: 'boolean',
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getSensorChoices() },
+				sensorOption(getSensorChoices()),
 				{
 					id: 'expression',
 					type: 'dropdown',
@@ -76,7 +81,7 @@ module.exports = function (self) {
 					choices: EXPRESSION_CHOICES,
 					default: '=',
 				},
-				{ id: 'value', type: 'number', label: 'Value', default: 72 },
+				{ id: 'value', type: 'number', label: 'Value', default: 72, min: -100000, max: 100000 },
 			],
 			defaultStyle: {
 				bgcolor: combineRgb(255, 165, 0),
@@ -94,12 +99,13 @@ module.exports = function (self) {
 		humidity_warning: {
 			name: 'Humidity Threshold',
 			type: 'advanced',
+			affectedProperties: ['bgcolor', 'color'],
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getSensorChoices() },
-				{ id: 'above', type: 'number', label: 'Above', default: 60 },
+				sensorOption(getSensorChoices()),
+				{ id: 'above', type: 'number', label: 'Above', default: 60, min: -100000, max: 100000 },
 				{ id: 'above_bgcolor', type: 'colorpicker', label: 'Above: Background Color', default: combineRgb(255, 0, 0) },
 				{ id: 'above_color', type: 'colorpicker', label: 'Above: Text Color', default: combineRgb(255, 255, 255) },
-				{ id: 'below', type: 'number', label: 'Below', default: 40 },
+				{ id: 'below', type: 'number', label: 'Below', default: 40, min: -100000, max: 100000 },
 				{ id: 'below_bgcolor', type: 'colorpicker', label: 'Below: Background Color', default: combineRgb(0, 0, 255) },
 				{ id: 'below_color', type: 'colorpicker', label: 'Below: Text Color', default: combineRgb(255, 255, 255) },
 			],
@@ -125,7 +131,7 @@ module.exports = function (self) {
 			name: 'Specific Humidity',
 			type: 'boolean',
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getSensorChoices() },
+				sensorOption(getSensorChoices()),
 				{
 					id: 'expression',
 					type: 'dropdown',
@@ -133,7 +139,7 @@ module.exports = function (self) {
 					choices: EXPRESSION_CHOICES,
 					default: '=',
 				},
-				{ id: 'value', type: 'number', label: 'Value', default: 50 },
+				{ id: 'value', type: 'number', label: 'Value', default: 50, min: -100000, max: 100000 },
 			],
 			defaultStyle: {
 				bgcolor: combineRgb(100, 149, 237),
@@ -151,12 +157,13 @@ module.exports = function (self) {
 		humidex_warning: {
 			name: 'Humidex Threshold',
 			type: 'advanced',
+			affectedProperties: ['bgcolor', 'color'],
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getHumidityTypeSensorChoices() },
-				{ id: 'above', type: 'number', label: 'Above', default: 90 },
+				sensorOption(getHumidityTypeSensorChoices()),
+				{ id: 'above', type: 'number', label: 'Above', default: 90, min: -100000, max: 100000 },
 				{ id: 'above_bgcolor', type: 'colorpicker', label: 'Above: Background Color', default: combineRgb(255, 0, 0) },
 				{ id: 'above_color', type: 'colorpicker', label: 'Above: Text Color', default: combineRgb(255, 255, 255) },
-				{ id: 'below', type: 'number', label: 'Below', default: 65 },
+				{ id: 'below', type: 'number', label: 'Below', default: 65, min: -100000, max: 100000 },
 				{ id: 'below_bgcolor', type: 'colorpicker', label: 'Below: Background Color', default: combineRgb(0, 0, 255) },
 				{ id: 'below_color', type: 'colorpicker', label: 'Below: Text Color', default: combineRgb(255, 255, 255) },
 			],
@@ -182,7 +189,7 @@ module.exports = function (self) {
 			name: 'Specific Humidex',
 			type: 'boolean',
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getHumidityTypeSensorChoices() },
+				sensorOption(getHumidityTypeSensorChoices()),
 				{
 					id: 'expression',
 					type: 'dropdown',
@@ -190,7 +197,7 @@ module.exports = function (self) {
 					choices: EXPRESSION_CHOICES,
 					default: '=',
 				},
-				{ id: 'value', type: 'number', label: 'Value', default: 90 },
+				{ id: 'value', type: 'number', label: 'Value', default: 90, min: -100000, max: 100000 },
 			],
 			defaultStyle: {
 				bgcolor: combineRgb(255, 165, 0),
@@ -208,12 +215,13 @@ module.exports = function (self) {
 		wet_bulb_warning: {
 			name: 'Wet Bulb Threshold',
 			type: 'advanced',
+			affectedProperties: ['bgcolor', 'color'],
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getHumidityTypeSensorChoices() },
-				{ id: 'above', type: 'number', label: 'Above', default: 80 },
+				sensorOption(getHumidityTypeSensorChoices()),
+				{ id: 'above', type: 'number', label: 'Above', default: 80, min: -100000, max: 100000 },
 				{ id: 'above_bgcolor', type: 'colorpicker', label: 'Above: Background Color', default: combineRgb(255, 0, 0) },
 				{ id: 'above_color', type: 'colorpicker', label: 'Above: Text Color', default: combineRgb(255, 255, 255) },
-				{ id: 'below', type: 'number', label: 'Below', default: 55 },
+				{ id: 'below', type: 'number', label: 'Below', default: 55, min: -100000, max: 100000 },
 				{ id: 'below_bgcolor', type: 'colorpicker', label: 'Below: Background Color', default: combineRgb(0, 0, 255) },
 				{ id: 'below_color', type: 'colorpicker', label: 'Below: Text Color', default: combineRgb(255, 255, 255) },
 			],
@@ -239,7 +247,7 @@ module.exports = function (self) {
 			name: 'Specific Wet Bulb',
 			type: 'boolean',
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getHumidityTypeSensorChoices() },
+				sensorOption(getHumidityTypeSensorChoices()),
 				{
 					id: 'expression',
 					type: 'dropdown',
@@ -247,7 +255,7 @@ module.exports = function (self) {
 					choices: EXPRESSION_CHOICES,
 					default: '=',
 				},
-				{ id: 'value', type: 'number', label: 'Value', default: 65 },
+				{ id: 'value', type: 'number', label: 'Value', default: 65, min: -100000, max: 100000 },
 			],
 			defaultStyle: {
 				bgcolor: combineRgb(255, 165, 0),
@@ -266,8 +274,8 @@ module.exports = function (self) {
 			name: 'Battery Level Warning',
 			type: 'boolean',
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getSensorChoices() },
-				{ id: 'threshold', type: 'number', label: 'Below %', default: 20 },
+				sensorOption(getSensorChoices()),
+				{ id: 'threshold', type: 'number', label: 'Below %', default: 20, min: -100000, max: 100000 },
 			],
 			defaultStyle: {
 				bgcolor: combineRgb(255, 165, 0),
@@ -282,8 +290,8 @@ module.exports = function (self) {
 			name: 'Signal Strength Warning',
 			type: 'boolean',
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getSensorChoices() },
-				{ id: 'threshold', type: 'number', label: 'Below %', default: 40 },
+				sensorOption(getSensorChoices()),
+				{ id: 'threshold', type: 'number', label: 'Below %', default: 40, min: -100000, max: 100000 },
 			],
 			defaultStyle: {
 				bgcolor: combineRgb(255, 0, 255),
@@ -298,8 +306,8 @@ module.exports = function (self) {
 			name: 'Last Checkin',
 			type: 'boolean',
 			options: [
-				{ id: 'sensor', type: 'dropdown', label: 'Sensor', choices: getSensorChoices() },
-				{ id: 'minutes', type: 'number', label: 'Older Than Minutes', default: 1440 },
+				sensorOption(getSensorChoices()),
+				{ id: 'minutes', type: 'number', label: 'Older Than Minutes', default: 1440, min: -100000, max: 100000 },
 			],
 			defaultStyle: {
 				bgcolor: combineRgb(255, 255, 0),

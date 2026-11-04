@@ -1,7 +1,8 @@
 {
 	"name": "monnit-sensors",
-	"version": "1.2.0",
+	"version": "2.0.0",
 	"main": "main.js",
+	"type": "module",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -12,13 +13,16 @@
 		"url": "git+https://github.com/bitfocus/companion-module-monnit-sensors.git"
 	},
 	"engines": {
-		"node": "^22"
+		"node": "^26.5"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.14.1"
+		"@companion-module/base": "~2.2.2"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.8.0"
+		"@companion-module/tools": "^3.2.0",
+		"eslint": "^9.39.3",
+		"prettier": "^3.8.1",
+		"typescript-eslint": "^8.56.1"
 	},
 	"resolutions": {
 		"fast-uri": "^3.1.9",

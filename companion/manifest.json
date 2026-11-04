@@ -1,9 +1,10 @@
 {
+	"type": "connection",
 	"id": "monnit-sensors",
 	"name": "Monnit Sensors",
 	"shortname": "monnit",
 	"description": "Retrieve sensor data from a Monnit account",
-	"version": "1.2.0",
+	"version": "2.0.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-monnit-sensors.git",
 	"bugs": "https://github.com/bitfocus/companion-module-monnit-sensors/issues",
@@ -14,7 +15,7 @@
 		}
 	],
 	"runtime": {
-		"type": "node22",
+		"type": "node26",
 		"api": "nodejs-ipc",
 		"apiVersion": "0.0.0",
 		"entrypoint": "../main.js"
