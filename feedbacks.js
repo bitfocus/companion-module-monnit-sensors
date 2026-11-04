@@ -1,4 +1,4 @@
-const { combineRgb } = require('@companion-module/base')
+import { combineRgb } from '@companion-module/base'
 
 const EXPRESSION_CHOICES = [
 	{ id: '=', label: 'Equal to (=)' },
@@ -26,7 +26,7 @@ function evaluateExpression(value, expression, target) {
 	}
 }
 
-module.exports = function (self) {
+export default function UpdateFeedbacks(self) {
 	const getSensorChoices = () => {
 		return Object.keys(self.sensors || {}).map((name) => ({ id: name, label: name }))
 	}

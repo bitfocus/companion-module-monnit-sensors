@@ -1,4 +1,4 @@
-module.exports = function (self) {
+export default function UpdateActions(self) {
 	const sensorChoices = Object.keys(self.sensors || {}).map((name) => ({ id: name, label: name }))
 
 	self.setActionDefinitions({

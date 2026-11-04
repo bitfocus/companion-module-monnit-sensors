@@ -2,7 +2,7 @@ function sanitizeId(name) {
 	return name.toLowerCase().replace(/[^a-z0-9]/g, '_')
 }
 
-module.exports = function (self) {
+export default function UpdateVariableDefinitions(self) {
 	const defs = {
 		last_poll_date: { name: 'Last Poll Date' },
 		last_poll_time: { name: 'Last Poll Time' },

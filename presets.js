@@ -1,4 +1,4 @@
-const { combineRgb } = require('@companion-module/base')
+import { combineRgb } from '@companion-module/base'
 
 function sanitizeId(name) {
 	return name.toLowerCase().replace(/[^a-z0-9]/g, '_')
@@ -18,7 +18,7 @@ const CATEGORIES = [
 	{ key: 'wet_bulb', name: 'Wet Bulb', feedbackId: 'wet_bulb_warning', above: 80, below: 55, humidityOnly: true },
 ]
 
-module.exports = function (self) {
+export default function UpdatePresets(self) {
 	const presets = {}
 	const sectionPresets = {}
 
