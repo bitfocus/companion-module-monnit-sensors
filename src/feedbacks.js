@@ -61,10 +61,16 @@ export default function UpdateFeedbacks(self) {
 				const value = parseFloat(sensor.parsedTemperature)
 				if (isNaN(value)) return {}
 				if (fb.options.above !== undefined && value > fb.options.above) {
-					return { bgcolor: fb.options.above_bgcolor, color: fb.options.above_color }
+					return {
+						bgcolor: fb.options.above_bgcolor ?? combineRgb(255, 0, 0),
+						color: fb.options.above_color ?? combineRgb(255, 255, 255),
+					}
 				}
 				if (fb.options.below !== undefined && value < fb.options.below) {
-					return { bgcolor: fb.options.below_bgcolor, color: fb.options.below_color }
+					return {
+						bgcolor: fb.options.below_bgcolor ?? combineRgb(0, 0, 255),
+						color: fb.options.below_color ?? combineRgb(255, 255, 255),
+					}
 				}
 				return {}
 			},
@@ -119,10 +125,16 @@ export default function UpdateFeedbacks(self) {
 				const value = parseFloat(sensor.parsedHumidity)
 				if (isNaN(value)) return {}
 				if (fb.options.above !== undefined && value > fb.options.above) {
-					return { bgcolor: fb.options.above_bgcolor, color: fb.options.above_color }
+					return {
+						bgcolor: fb.options.above_bgcolor ?? combineRgb(255, 0, 0),
+						color: fb.options.above_color ?? combineRgb(255, 255, 255),
+					}
 				}
 				if (fb.options.below !== undefined && value < fb.options.below) {
-					return { bgcolor: fb.options.below_bgcolor, color: fb.options.below_color }
+					return {
+						bgcolor: fb.options.below_bgcolor ?? combineRgb(0, 0, 255),
+						color: fb.options.below_color ?? combineRgb(255, 255, 255),
+					}
 				}
 				return {}
 			},
@@ -177,10 +189,16 @@ export default function UpdateFeedbacks(self) {
 				const value = parseFloat(sensor.parsedHumidex)
 				if (isNaN(value)) return {}
 				if (fb.options.above !== undefined && value > fb.options.above) {
-					return { bgcolor: fb.options.above_bgcolor, color: fb.options.above_color }
+					return {
+						bgcolor: fb.options.above_bgcolor ?? combineRgb(255, 0, 0),
+						color: fb.options.above_color ?? combineRgb(255, 255, 255),
+					}
 				}
 				if (fb.options.below !== undefined && value < fb.options.below) {
-					return { bgcolor: fb.options.below_bgcolor, color: fb.options.below_color }
+					return {
+						bgcolor: fb.options.below_bgcolor ?? combineRgb(0, 0, 255),
+						color: fb.options.below_color ?? combineRgb(255, 255, 255),
+					}
 				}
 				return {}
 			},
@@ -235,10 +253,16 @@ export default function UpdateFeedbacks(self) {
 				const value = parseFloat(sensor.parsedWetBulb)
 				if (isNaN(value)) return {}
 				if (fb.options.above !== undefined && value > fb.options.above) {
-					return { bgcolor: fb.options.above_bgcolor, color: fb.options.above_color }
+					return {
+						bgcolor: fb.options.above_bgcolor ?? combineRgb(255, 0, 0),
+						color: fb.options.above_color ?? combineRgb(255, 255, 255),
+					}
 				}
 				if (fb.options.below !== undefined && value < fb.options.below) {
-					return { bgcolor: fb.options.below_bgcolor, color: fb.options.below_color }
+					return {
+						bgcolor: fb.options.below_bgcolor ?? combineRgb(0, 0, 255),
+						color: fb.options.below_color ?? combineRgb(255, 255, 255),
+					}
 				}
 				return {}
 			},
@@ -275,7 +299,7 @@ export default function UpdateFeedbacks(self) {
 			type: 'boolean',
 			options: [
 				sensorOption(getSensorChoices()),
-				{ id: 'threshold', type: 'number', label: 'Below %', default: 20, min: -100000, max: 100000 },
+				{ id: 'threshold', type: 'number', label: 'Below %', default: 20, min: 0, max: 100 },
 			],
 			defaultStyle: {
 				bgcolor: combineRgb(255, 165, 0),
@@ -291,7 +315,7 @@ export default function UpdateFeedbacks(self) {
 			type: 'boolean',
 			options: [
 				sensorOption(getSensorChoices()),
-				{ id: 'threshold', type: 'number', label: 'Below %', default: 40, min: -100000, max: 100000 },
+				{ id: 'threshold', type: 'number', label: 'Below %', default: 40, min: 0, max: 100 },
 			],
 			defaultStyle: {
 				bgcolor: combineRgb(255, 0, 255),
@@ -307,7 +331,7 @@ export default function UpdateFeedbacks(self) {
 			type: 'boolean',
 			options: [
 				sensorOption(getSensorChoices()),
-				{ id: 'minutes', type: 'number', label: 'Older Than Minutes', default: 1440, min: -100000, max: 100000 },
+				{ id: 'minutes', type: 'number', label: 'Older Than Minutes', default: 1440, min: 0, max: 100000 },
 			],
 			defaultStyle: {
 				bgcolor: combineRgb(255, 255, 0),
