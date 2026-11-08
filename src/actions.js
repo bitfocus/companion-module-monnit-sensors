@@ -18,6 +18,7 @@ export default function UpdateActions(self) {
 					label: 'Sensor',
 					choices: sensorChoices,
 					default: sensorChoices[0]?.id ?? '',
+					allowCustom: true,
 				},
 			],
 			callback: async (event, context) => {

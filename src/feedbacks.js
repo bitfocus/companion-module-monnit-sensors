@@ -8,7 +8,7 @@ const EXPRESSION_CHOICES = [
 ]
 
 function sensorOption(choices) {
-	return { id: 'sensor', type: 'dropdown', label: 'Sensor', choices, default: choices[0]?.id ?? '' }
+	return { id: 'sensor', type: 'dropdown', label: 'Sensor', choices, default: choices[0]?.id ?? '', allowCustom: true }
 }
 
 function evaluateExpression(value, expression, target) {
