@@ -1,6 +1,6 @@
 {
 	"name": "monnit-sensors",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"main": "src/main.js",
 	"type": "module",
 	"packageManager": "yarn@4.18.1",
