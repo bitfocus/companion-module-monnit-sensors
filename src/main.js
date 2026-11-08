@@ -174,8 +174,9 @@ export default class ModuleInstance extends InstanceBase {
 		return this.requestQueue
 	}
 
-	async fetchSensorData() {
+	async fetchSensorData(signal) {
 		return this.queueRequest(async () => {
+			if (signal?.aborted) return
 			try {
 				const url = 'https://www.imonnit.com/json/SensorList'
 				const body = JSON.stringify({})
@@ -190,6 +191,7 @@ export default class ModuleInstance extends InstanceBase {
 						APISecretKey: this.config.APISecretKey,
 					},
 					body,
+					signal,
 				})
 				const text = await res.text()
 				if (this.config.verbose) {
@@ -228,7 +230,7 @@ export default class ModuleInstance extends InstanceBase {
 		})
 	}
 
-	async fetchSingleSensor(name) {
+	async fetchSingleSensor(name, signal) {
 		const info = this.sensors[name]
 		if (!info) {
 			this.log('error', `Sensor not found: ${name}`)
@@ -236,6 +238,7 @@ export default class ModuleInstance extends InstanceBase {
 		}
 
 		return this.queueRequest(async () => {
+			if (signal?.aborted) return
 			try {
 				const url = 'https://www.imonnit.com/json/SensorGet'
 				const body = JSON.stringify({
@@ -252,6 +255,7 @@ export default class ModuleInstance extends InstanceBase {
 						APISecretKey: this.config.APISecretKey,
 					},
 					body,
+					signal,
 				})
 				const text = await res.text()
 				if (this.config.verbose) {

@@ -5,8 +5,8 @@ export default function UpdateActions(self) {
 		refresh_now: {
 			name: 'Refresh All Sensors',
 			options: [],
-			callback: async () => {
-				await self.fetchSensorData()
+			callback: async (_event, context) => {
+				await self.fetchSensorData(context?.signal)
 			},
 		},
 		refresh_sensor: {
@@ -18,10 +18,11 @@ export default function UpdateActions(self) {
 					label: 'Sensor',
 					choices: sensorChoices,
 					default: sensorChoices[0]?.id ?? '',
+					allowCustom: true,
 				},
 			],
-			callback: async (event) => {
-				await self.fetchSingleSensor(event.options.sensor)
+			callback: async (event, context) => {
+				await self.fetchSingleSensor(event.options.sensor, context?.signal)
 			},
 		},
 	})
