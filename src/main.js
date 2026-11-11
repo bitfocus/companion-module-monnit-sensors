@@ -224,6 +224,10 @@ export default class ModuleInstance extends InstanceBase {
 					this.updateStatus(InstanceStatus.UnknownWarning)
 				}
 			} catch (e) {
+				if (signal?.aborted || e?.name === 'AbortError') {
+					if (this.config.verbose) this.log('debug', 'Refresh aborted')
+					return
+				}
 				this.log('error', `Request failed: ${e}`)
 				this.updateStatus(InstanceStatus.ConnectionFailure)
 			}
@@ -280,6 +284,10 @@ export default class ModuleInstance extends InstanceBase {
 					this.log('error', 'Invalid response from server')
 				}
 			} catch (e) {
+				if (signal?.aborted || e?.name === 'AbortError') {
+					if (this.config.verbose) this.log('debug', 'Refresh aborted')
+					return
+				}
 				this.log('error', `Request failed: ${e}`)
 			}
 		})
